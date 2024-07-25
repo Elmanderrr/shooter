@@ -116,7 +116,7 @@ export class Player extends Entity {
     this.healthBar!.width = this.width * (this.remainedHealth / this.health);
 
     if (this.remainedHealth <= 0) {
-      this.scene.
+      this.die();
     }
   }
 
