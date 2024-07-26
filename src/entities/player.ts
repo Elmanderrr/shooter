@@ -15,9 +15,7 @@ export class Player extends Entity {
 
   public healthBar?: Phaser.GameObjects.Rectangle;
 
-  public lastVerticalDirection: 'up' | 'down' = 'up';
-
-  public attackSpeed = 300;
+  public attackSpeed = 600; // ms
 
   constructor(scene: Level, x: number, y: number, texture?: string) {
     super(scene, x, y, texture);
@@ -27,6 +25,14 @@ export class Player extends Entity {
     this.definedAnimations();
 
     this.drawHealthBar();
+
+    this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+      const notWalkable = this.isWalkable(pointer);
+
+      if (!notWalkable) {
+        this.x = pointer.x;
+      }
+    });
   }
 
   public update(delta: number) {
@@ -83,9 +89,7 @@ export class Player extends Entity {
 
   private movementsController(delta: number) {
     const keyA = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    const keyS = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     const keyD = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    const keyW = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     const velocity = (delta / 1000) * this.moveSpeed;
 
     if (keyA.isDown) {
@@ -96,16 +100,6 @@ export class Player extends Entity {
       this.play('right', true);
       this.setVelocity(velocity * this.moveSpeed, 0);
       this.idle = false;
-    } else if (keyW.isDown) {
-      this.play('down', true);
-      this.setVelocity(0, -velocity * this.moveSpeed);
-      this.idle = false;
-      this.lastVerticalDirection = 'up';
-    } else if (keyS.isDown) {
-      this.play('down', true);
-      this.setVelocity(0, velocity * this.moveSpeed);
-      this.idle = false;
-      this.lastVerticalDirection = 'down';
     } else {
       this.setVelocity(0, 0);
       this.stop();
@@ -125,5 +119,24 @@ export class Player extends Entity {
   private die() {
     this.destroy();
     this.alive = false;
+  }
+
+  private isWalkable(pointer: Phaser.Input.Pointer): boolean {
+    return (
+      !!this.scene.map.getTileAtWorldXY(
+        pointer.x - this.width / 2,
+        pointer.y,
+        undefined,
+        undefined,
+        this.scene.wallLayer,
+      ) ||
+      !!this.scene.map.getTileAtWorldXY(
+        pointer.x + this.width / 2,
+        pointer.y,
+        undefined,
+        undefined,
+        this.scene.wallLayer,
+      )?.collides
+    );
   }
 }

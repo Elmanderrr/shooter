@@ -2,16 +2,21 @@ import Phaser from 'phaser';
 
 import { Position } from '../models/general.model.ts';
 import { Level } from '../scenes/level.ts';
-import { SIZES } from '../utils/constats.ts';
+import { SIZES, SPRITES } from '../utils/constats.ts';
 import { Entity } from './entity.ts';
 import { Player } from './player.ts';
 
 export class Enemy extends Entity {
   constructor(scene: Level, x: number, y: number, texture?: string) {
     super(scene, x, y, texture);
+
+    this.setScale(0.6);
+    this.play('attack');
   }
 
   private speed = 50;
+
+  private animation?: Phaser.GameObjects.Sprite;
 
   private pathToPlayer: Position[] | null = [];
 
@@ -39,6 +44,7 @@ export class Enemy extends Entity {
       this.scene.tweens.killTweensOf(this);
       this.pathToPlayer = [];
       this.destination = undefined;
+      this.stop();
       this.handleAttack(player);
     } else {
       this.timer?.destroy();

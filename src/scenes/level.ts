@@ -15,7 +15,7 @@ export class Level extends Phaser.Scene {
 
   public bullets!: Bullets;
 
-  private map!: Phaser.Tilemaps.Tilemap;
+  public map!: Phaser.Tilemaps.Tilemap;
 
   private tileset!: Phaser.Tilemaps.Tileset;
 
@@ -37,6 +37,11 @@ export class Level extends Phaser.Scene {
       frameWidth: SIZES.PLAYER.WIDTH,
       frameHeight: SIZES.PLAYER.HEIGHT,
     });
+    this.load.atlas(
+      SPRITES.ORC,
+      '/assets/characters/texture.png',
+      '/assets/characters/texture.json',
+    );
     this.load.spritesheet(SPRITES.BOAR, '/assets/characters/boar.png', {
       frameWidth: SIZES.ENEMY.WIDTH,
       frameHeight: SIZES.ENEMY.HEIGHT,
@@ -44,6 +49,18 @@ export class Level extends Phaser.Scene {
   }
 
   create() {
+    this.anims.create({
+      key: 'attack',
+      frames: this.anims.generateFrameNames(SPRITES.ORC, {
+        start: 1,
+        end: 11,
+        zeroPad: 3,
+        prefix: '0_Orc_Running_',
+        suffix: '',
+      }),
+      frameRate: 12,
+      repeat: -1,
+    });
     this.createMap();
 
     this.createEnemies();
@@ -104,15 +121,13 @@ export class Level extends Phaser.Scene {
   }
 
   private setUpEvents() {
-    const throttled = throttle(
-      () =>
-        this.bullets.fireBullet(this.player.x, this.player.y, this.player.lastVerticalDirection),
-      this.player.attackSpeed,
-    );
-    this.input.on('pointerdown', () => {
-      if (this.player.alive) {
-        throttled();
-      }
+    this.time.addEvent({
+      callback: () => {
+        this.bullets.fireBullet(this.player.x, this.player.y);
+      },
+      callbackScope: this,
+      delay: this.player.attackSpeed,
+      loop: true,
     });
   }
 
@@ -132,9 +147,9 @@ export class Level extends Phaser.Scene {
 
   private createEnemies() {
     this.enemiesGroup = this.add.group({
-      key: SPRITES.BOAR,
+      key: SPRITES.ORC,
       classType: Enemy,
-      quantity: 15,
+      quantity: 10,
     });
     Phaser.Actions.PlaceOnRectangle(
       this.enemiesGroup.getChildren(),

@@ -23,4 +23,5 @@ export const SPRITES = {
   PLAYER: 'Player',
   BOAR: 'Boar',
   BULLET: 'Bullet',
+  ORC: 'Orc',
 };

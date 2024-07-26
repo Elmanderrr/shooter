@@ -16,11 +16,11 @@ export class Bullets extends Phaser.Physics.Arcade.Group {
     });
   }
 
-  public fireBullet(x: number, y: number, direction: 'up' | 'down') {
+  public fireBullet(x: number, y: number) {
     let bullet = this.getFirstDead(false) as Bullet;
 
     if (bullet) {
-      bullet.fire(x, y, direction);
+      bullet.fire(x, y);
     }
   }
 }

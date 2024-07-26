@@ -1,10 +1,7 @@
-import Phaser from 'phaser';
 import levelJSON from '../../../public/assets/level1.json';
 import { Level } from '../../scenes/level.ts';
 import { SIZES, SPRITES } from '../../utils/constats.ts';
 import { Entity } from '../entity.ts';
-
-export type BulletDirection = 'up' | 'down' | 'left' | 'right';
 
 export class Bullet extends Entity {
   constructor(
@@ -20,14 +17,11 @@ export class Bullet extends Entity {
     this.setOffset(45, 45);
   }
 
-  fire(x: number, y: number, direction: BulletDirection) {
+  fire(x: number, y: number) {
     this.body?.reset(x, y);
     this.setActive(true);
     this.setVisible(true);
-    this.setVelocity(
-      0,
-      direction === 'up' ? -levelJSON.height * SIZES.TILE : levelJSON.height * SIZES.TILE,
-    );
+    this.setVelocity(0, -levelJSON.height * SIZES.TILE);
   }
 
   kill() {
