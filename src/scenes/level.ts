@@ -1,3 +1,4 @@
+import { throttle } from 'lodash-es';
 import Phaser from 'phaser';
 import PhaserNavMeshPlugin, { PhaserNavMesh } from 'phaser-navmesh/dist/phaser-navmesh/src';
 import levelJSON from '../../public/assets/level1.json';
@@ -6,12 +7,11 @@ import { Bullets } from '../entities/bullet/bullets.ts';
 import { Enemy } from '../entities/enemy.ts';
 import { Player } from '../entities/player.ts';
 import { LAYERS, LEVELS, SIZES, SPRITES } from '../utils/constats.ts';
-import { Fabric } from '../utils/fabric.ts';
 
 export class Level extends Phaser.Scene {
   public player!: Player;
 
-  public enemy!: Enemy[];
+  public enemiesGroup!: Phaser.GameObjects.Group;
 
   public bullets!: Bullets;
 
@@ -46,8 +46,7 @@ export class Level extends Phaser.Scene {
   create() {
     this.createMap();
 
-    // probably should be added as a phaser group
-    this.enemy = Fabric.generateEnemies(this, 11);
+    this.createEnemies();
     this.player = new Player(this, 5 * SIZES.TILE, 19 * SIZES.TILE, SPRITES.PLAYER);
     this.bullets = new Bullets(this);
 
@@ -66,7 +65,7 @@ export class Level extends Phaser.Scene {
 
   update(_: number, delta: number) {
     this.player.update(delta);
-    this.enemy.forEach((e) => e.update(this.player));
+    this.enemiesGroup.getChildren().forEach((e) => (e as Enemy).update(this.player));
   }
 
   private createWallsLayer(tileset: Phaser.Tilemaps.Tileset) {
@@ -83,10 +82,11 @@ export class Level extends Phaser.Scene {
 
     if (this.wallLayer) {
       this.physics.add.collider(this.player, this.wallLayer);
-      this.physics.add.collider(this.enemy, this.wallLayer);
+      this.physics.add.collider(this.enemiesGroup, this.wallLayer);
+      this.physics.add.collider(this.enemiesGroup, this.wallLayer);
     }
 
-    this.physics.add.overlap(this.enemy, this.bullets, (e, b) => {
+    this.physics.add.overlap(this.enemiesGroup, this.bullets, (e, b) => {
       const enemy = e as Enemy;
       const bullet = b as Bullet;
 
@@ -104,9 +104,14 @@ export class Level extends Phaser.Scene {
   }
 
   private setUpEvents() {
+    const throttled = throttle(
+      () =>
+        this.bullets.fireBullet(this.player.x, this.player.y, this.player.lastVerticalDirection),
+      this.player.attackSpeed,
+    );
     this.input.on('pointerdown', () => {
       if (this.player.alive) {
-        this.bullets.fireBullet(this.player.x, this.player.y, this.player.lastVerticalDirection);
+        throttled();
       }
     });
   }
@@ -123,5 +128,17 @@ export class Level extends Phaser.Scene {
 
     this.map.createLayer(LAYERS.GROUND, this.tileset);
     this.createWallsLayer(this.tileset);
+  }
+
+  private createEnemies() {
+    this.enemiesGroup = this.add.group({
+      key: SPRITES.BOAR,
+      classType: Enemy,
+      quantity: 15,
+    });
+    Phaser.Actions.PlaceOnRectangle(
+      this.enemiesGroup.getChildren(),
+      new Phaser.Geom.Rectangle(110, 30, 120, 200),
+    );
   }
 }

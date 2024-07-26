@@ -3,7 +3,7 @@ import { Level } from '../scenes/level.ts';
 import { Entity } from './entity.ts';
 
 export class Player extends Entity {
-  private moveSpeed = 50;
+  private moveSpeed = 90;
 
   public idle: boolean | undefined = undefined;
 
@@ -16,6 +16,8 @@ export class Player extends Entity {
   public healthBar?: Phaser.GameObjects.Rectangle;
 
   public lastVerticalDirection: 'up' | 'down' = 'up';
+
+  public attackSpeed = 300;
 
   constructor(scene: Level, x: number, y: number, texture?: string) {
     super(scene, x, y, texture);
@@ -31,7 +33,7 @@ export class Player extends Entity {
     if (!this.alive) {
       return;
     }
-    this.movementsControler(delta);
+    this.movementsController(delta);
 
     if (this.healthBar) {
       this.healthBar!.x = this.x;
@@ -79,29 +81,29 @@ export class Player extends Entity {
     this.healthBar = this.scene.add.rectangle(0, 0, this.width, 5, 0x4287f5);
   }
 
-  private movementsControler(delta: number) {
+  private movementsController(delta: number) {
     const keyA = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     const keyS = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     const keyD = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     const keyW = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    const increment = delta * 0.25;
+    const velocity = (delta / 1000) * this.moveSpeed;
 
     if (keyA.isDown) {
       this.play('left', true);
-      this.setVelocity(-increment * this.moveSpeed, 0);
+      this.setVelocity(-velocity * this.moveSpeed, 0);
       this.idle = false;
     } else if (keyD.isDown) {
       this.play('right', true);
-      this.setVelocity(increment * this.moveSpeed, 0);
+      this.setVelocity(velocity * this.moveSpeed, 0);
       this.idle = false;
     } else if (keyW.isDown) {
       this.play('down', true);
-      this.setVelocity(0, -increment * this.moveSpeed);
+      this.setVelocity(0, -velocity * this.moveSpeed);
       this.idle = false;
       this.lastVerticalDirection = 'up';
     } else if (keyS.isDown) {
       this.play('down', true);
-      this.setVelocity(0, increment * this.moveSpeed);
+      this.setVelocity(0, velocity * this.moveSpeed);
       this.idle = false;
       this.lastVerticalDirection = 'down';
     } else {

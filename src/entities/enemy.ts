@@ -7,15 +7,12 @@ import { Entity } from './entity.ts';
 import { Player } from './player.ts';
 
 export class Enemy extends Entity {
-  constructor(
-    scene: Level,
-    x: number,
-    y: number,
-    texture?: string,
-    private speed = 100,
-  ) {
+  constructor(scene: Level, x: number, y: number, texture?: string) {
     super(scene, x, y, texture);
   }
+
+  private speed = 50;
+
   private pathToPlayer: Position[] | null = [];
 
   private destination?: Position;
@@ -63,6 +60,7 @@ export class Enemy extends Entity {
   private findPlayerAndFollow(p: Player) {
     const { x, y } = p;
     this.pathToPlayer = this.scene.phaserNavMesh.findPath({ x: this.x, y: this.y }, { x, y });
+
     this.destination = this.pathToPlayer?.shift();
     if (this.destination) {
       this.moveEnemyTo(this.destination);
