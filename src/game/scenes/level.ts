@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
 import PhaserNavMeshPlugin, { PhaserNavMesh } from 'phaser-navmesh/dist/phaser-navmesh/src';
-import levelJSON from '../../public/assets/leve1-horizontal.json';
+import levelJSON from '../../../public/assets/leve1-horizontal.json';
 import { Bullet } from '../entities/bullet/bullet.ts';
 import { Bullets } from '../entities/bullet/bullets.ts';
 import { Enemy } from '../entities/enemy.ts';
 import { Player } from '../entities/player.ts';
+import { EventBus } from '../EventBus.ts';
 import { LAYERS, LEVELS, SIZES, SPRITES } from '../utils/constats.ts';
 import { BattleController } from '../controllers/battle.controller.ts';
 import { PreloadManager } from '../helpers/preload-manager.ts';
@@ -59,6 +60,7 @@ export class Level extends Phaser.Scene {
       undefined,
       Math.floor(SIZES.TILE / 3),
     );
+      EventBus.emit('current-scene-ready', this);
   }
 
   update(_: number, delta: number) {

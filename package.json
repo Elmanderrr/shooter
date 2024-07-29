@@ -1,45 +1,51 @@
 {
-  "name": "shooter",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@types/lodash-es": "^4.17.12",
-    "easystarjs": "^0.4.4",
-    "lodash-es": "^4.17.21",
-    "phaser": "^3.80.1",
-    "phaser-navmesh": "^2.3.1",
-    "prettier": "^3.3.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "typescript-eslint": "^7.17.0",
-    "vite-plugin-checker": "^0.7.2"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
-    "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.7",
-    "typescript": "^5.2.2",
-    "vite": "^5.3.4"
-  },
-  "prettier": {
-    "endOfline": "lf",
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true,
-    "bracketSpacing": true,
-    "printWidth": 100
-  }
+    "name": "template-react-ts",
+    "description": "A Phaser 3 TypeScript project template that demonstrates React communication and uses Vite for bundling.",
+    "version": "1.0.2",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/phaserjs/template-react-ts.git"
+    },
+    "author": "Phaser Studio <support@phaser.io> (https://phaser.io/)",
+    "license": "MIT",
+    "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
+    "bugs": {
+        "url": "https://github.com/phaserjs/template-react-ts/issues"
+    },
+    "homepage": "https://github.com/phaserjs/template-react-ts#readme",
+    "keywords": [
+        "phaser",
+        "phaser3",
+        "react",
+        "vite",
+        "typescript"
+    ],
+    "scripts": {
+        "dev": "vite --config vite/config.dev.mjs",
+        "build": "vite build --config vite/config.prod.mjs"
+    },
+    "dependencies": {
+        "phaser": "^3.80.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "easystarjs": "^0.4.4",
+        "lodash-es": "^4.17.21",
+        "phaser-navmesh": "^2.3.1",
+        "prettier": "^3.3.3",
+        "vite-plugin-checker": "^0.7.2"
+    },
+    "devDependencies": {
+        "@types/lodash-es": "^4.17.12",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "^18.3.0",
+        "@typescript-eslint/eslint-plugin": "^7.13.1",
+        "@typescript-eslint/parser": "^7.13.1",
+        "@vitejs/plugin-react": "^4.3.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react-hooks": "^4.6.2",
+        "eslint-plugin-react-refresh": "^0.4.7",
+        "typescript": "^5.2.2",
+        "terser": "^5.28.1",
+        "vite": "^5.3.1"
+    }
 }
