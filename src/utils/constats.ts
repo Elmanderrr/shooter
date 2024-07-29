@@ -1,6 +1,7 @@
 export const LAYERS = {
-  GROUND: 'ground',
-  WALLS: 'walls',
+  WATER: 'water',
+  OBSTACLES: 'obstacles',
+  WALKABLE: 'walkable',
 };
 
 export const SIZES = {
@@ -23,5 +24,9 @@ export const SPRITES = {
   PLAYER: 'Player',
   BOAR: 'Boar',
   BULLET: 'Bullet',
-  ORC: 'Orc',
+  ORC: {
+    BASE: 'Base',
+    DYING: 'Dying',
+    SLASHING: 'Slashing',
+  },
 };

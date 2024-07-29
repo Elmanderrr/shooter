@@ -2,33 +2,37 @@ import Phaser from 'phaser';
 
 import { Position } from '../models/general.model.ts';
 import { Level } from '../scenes/level.ts';
-import { SIZES, SPRITES } from '../utils/constats.ts';
+import { SIZES } from '../utils/constats.ts';
 import { Entity } from './entity.ts';
 import { Player } from './player.ts';
+import ANIMATION_COMPLETE = Phaser.Animations.Events.ANIMATION_COMPLETE;
 
 export class Enemy extends Entity {
   constructor(scene: Level, x: number, y: number, texture?: string) {
-    super(scene, x, y, texture);
+    super(scene, x, y, texture, {
+      health: 100,
+      speed: 50,
+      power: 10,
+      attackSpeed: 1000,
+    });
 
-    this.setScale(0.6);
-    this.play('attack');
+    this.setScale(0.5);
+    this.setSize(this.displayWidth, this.displayHeight);
+    this.setOffset(35, 35);
+    this.play('walking');
+    this.setDepth(1);
+    this.drawHealthBar();
   }
 
-  private speed = 50;
-
-  private animation?: Phaser.GameObjects.Sprite;
+  public player!: Player;
 
   private pathToPlayer: Position[] | null = [];
 
   private destination?: Position;
 
-  private attackRange = 30;
+  private healthBar?: Phaser.GameObjects.Rectangle;
 
-  public health = 100;
-
-  public power = 4;
-
-  public alive = true;
+  private attackRange = 50;
 
   public timer?: Phaser.Time.TimerEvent;
 
@@ -38,15 +42,17 @@ export class Enemy extends Entity {
     }
     const distance = Phaser.Math.Distance.Between(player.x, player.y, this.x, this.y);
     const inAttackRange = distance <= this.attackRange;
+    this.setFlipX(this.player.x < this.x);
 
     // stop at attack range otherwise follow player
     if (inAttackRange) {
       this.scene.tweens.killTweensOf(this);
       this.pathToPlayer = [];
       this.destination = undefined;
-      this.stop();
+      this.play('slashing', true);
       this.handleAttack(player);
     } else {
+      this.play('walking', true);
       this.timer?.destroy();
       this.timer = undefined;
       this.findPlayerAndFollow(player);
@@ -60,6 +66,11 @@ export class Enemy extends Entity {
         this.destination = newDestination;
         this.moveEnemyTo(this.destination);
       }
+    }
+
+    if (this.healthBar) {
+      this.healthBar!.x = this.x;
+      this.healthBar!.y = this.y - 32;
     }
   }
 
@@ -93,18 +104,15 @@ export class Enemy extends Entity {
   }
 
   die() {
-    this.alive = false;
+    super.die();
+    const anim = this.play('dying');
+    anim.on(ANIMATION_COMPLETE, () => {
+      this.destroy();
+    });
     this.scene.tweens.killTweensOf(this);
     this.pathToPlayer = [];
     this.destination = undefined;
     this.timer?.destroy();
-    this.destroy();
-  }
-
-  public attack(player: Player) {
-    if (player.alive) {
-      player.hit(this.power);
-    }
   }
 
   private handleAttack(player: Player) {
@@ -114,9 +122,23 @@ export class Enemy extends Entity {
           this.attack(player);
         },
         callbackScope: this,
-        delay: 1000,
+        delay: this.attackSpeed,
         loop: true,
       });
     }
+  }
+
+  public takeDamage(amount: number) {
+    super.takeDamage(amount);
+    this.healthBar!.width = 32 * (this.health / this.maxHealth);
+
+    if (this.health <= 0) {
+      this.die();
+    }
+  }
+
+  private drawHealthBar() {
+    this.healthBar = this.scene.add.rectangle(0, 0, 32, 5, 0x4287f5);
+    this.healthBar.setDepth(2);
   }
 }

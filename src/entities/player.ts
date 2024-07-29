@@ -7,30 +7,33 @@ export class Player extends Entity {
 
   public idle: boolean | undefined = undefined;
 
-  public health = 100;
+  public maxHealth = 100;
 
   public alive = true;
 
-  public remainedHealth = this.health;
+  public power = 50;
+
+  public health = this.maxHealth;
 
   public healthBar?: Phaser.GameObjects.Rectangle;
 
-  public attackSpeed = 600; // ms
+  public attackSpeed = 300; // ms
 
   constructor(scene: Level, x: number, y: number, texture?: string) {
     super(scene, x, y, texture);
     this.setSize(28, 32);
     this.setOffset(10, 16);
     this.setScale(0.8);
+    this.setDepth(2);
     this.definedAnimations();
 
     this.drawHealthBar();
 
     this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      const notWalkable = this.isWalkable(pointer);
+      const walkable = this.isWalkable(pointer);
 
-      if (!notWalkable) {
-        this.x = pointer.x;
+      if (walkable) {
+        this.y = pointer.y;
       }
     });
   }
@@ -107,36 +110,36 @@ export class Player extends Entity {
     }
   }
 
-  public hit(amount: number) {
-    this.remainedHealth -= amount;
-    this.healthBar!.width = this.width * (this.remainedHealth / this.health);
+  public takeDamage(amount: number) {
+    super.takeDamage(amount);
+    this.healthBar!.width = this.width * (this.health / this.maxHealth);
 
-    if (this.remainedHealth <= 0) {
+    if (this.health <= 0) {
       this.die();
     }
   }
 
-  private die() {
+  public die() {
+    super.die();
     this.destroy();
-    this.alive = false;
   }
 
   private isWalkable(pointer: Phaser.Input.Pointer): boolean {
     return (
       !!this.scene.map.getTileAtWorldXY(
-        pointer.x - this.width / 2,
-        pointer.y,
+        pointer.x,
+        pointer.y - this.displayHeight / 2,
         undefined,
         undefined,
-        this.scene.wallLayer,
-      ) ||
+        this.scene.walkableLayer,
+      ) &&
       !!this.scene.map.getTileAtWorldXY(
-        pointer.x + this.width / 2,
-        pointer.y,
+        pointer.x,
+        pointer.y + this.displayHeight / 2,
         undefined,
         undefined,
-        this.scene.wallLayer,
-      )?.collides
+        this.scene.walkableLayer,
+      )
     );
   }
 }

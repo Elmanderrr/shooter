@@ -3,51 +3,59 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "leve1-horizontal.json",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
-        "": {
+        "#level1": {
+            "scaleInDock": 1
+        },
+        "leve1-horizontal.json": {
+            "scale": 0.7065625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 480.49535603715174,
+                "y": 160.63688633348067
+            }
+        },
+        "leve1-horizontal.json#level1": {
+            "scaleInDock": 1
+        },
+        "leve1-horizontal.tmj": {
+            "scale": 0.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 463,
+                "y": -167
+            }
+        },
+        "leve1-horizontal.tmj#level1": {
             "scaleInDock": 1
         },
         "level1.json": {
-            "scale": 1,
-            "selectedLayer": 1,
+            "scale": 1.3741071428571427,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 460,
-                "y": 284.5
+                "x": 159.74009096816116,
+                "y": 335.8544509421702
             }
         },
         "level1.json#level1": {
             "scaleInDock": 1
-        },
-        "level1.json#map-tiles": {
-            "scaleInDock": 1
-        },
-        "level1.tmj": {
-            "scale": 1,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 0,
-                "y": -0.5
-            }
-        },
-        "level1.tsj": {
-            "scaleInDock": 1,
-            "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/work/ws-projects/shooter/public/assets",
+    "last.imagePath": "C:/coding/shooter/public/assets",
+    "map.height": 30,
     "map.lastUsedFormat": "json",
+    "map.width": 10,
     "openFiles": [
+        "leve1-horizontal.json"
     ],
     "project": "level1.tiled-project",
     "recentFiles": [
-        "level1.json",
-        "level1.tsj",
-        "level1.tmj"
+        "leve1-horizontal.json",
+        "level1.json"
     ],
-    "tileset.embedInMap": true,
-    "tileset.lastUsedFormat": "json",
-    "tileset.spacing": 1
+    "tileset.embedInMap": true
 }

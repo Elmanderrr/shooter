@@ -1,0 +1,39 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "#texture": {
+            "scaleInDock": 1
+        },
+        "kennys.tmx": {
+            "scale": 0.9618749999999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 319.68810916179336,
+                "y": -253.15139701104619
+            }
+        },
+        "kennys.tmx#texture": {
+            "scaleInDock": 1
+        },
+        "level1.json": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 257,
+                "y": 107.66666666666663
+            }
+        },
+        "level1.json#texture": {
+            "scaleInDock": 1
+        }
+    },
+    "openFiles": [
+    ],
+    "project": "",
+    "recentFiles": [
+        "level1.json",
+        "kennys.tmx"
+    ]
+}

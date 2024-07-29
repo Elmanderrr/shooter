@@ -1,4 +1,3 @@
-import levelJSON from '../../../public/assets/level1.json';
 import { Level } from '../../scenes/level.ts';
 import { SIZES, SPRITES } from '../../utils/constats.ts';
 import { Entity } from '../entity.ts';
@@ -21,7 +20,7 @@ export class Bullet extends Entity {
     this.body?.reset(x, y);
     this.setActive(true);
     this.setVisible(true);
-    this.setVelocity(0, -levelJSON.height * SIZES.TILE);
+    this.setVelocity(this.scene.map.width * SIZES.TILE, 0);
   }
 
   kill() {
@@ -32,7 +31,7 @@ export class Bullet extends Entity {
   protected preUpdate(time: number, delta: number) {
     super.preUpdate(time, delta);
 
-    if (this.y > levelJSON.height * SIZES.TILE || this.y < -32) {
+    if (this.x > this.scene.map.widthInPixels || this.x < 32) {
       this.kill();
     }
   }
