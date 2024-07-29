@@ -3,28 +3,17 @@ import { RefPhaserGame, PhaserGame } from './game/PhaserGame';
 import GameUI from './game/ui/GameUI.tsx';
 
 function App() {
-    //  References to the PhaserGame component (game and scene are exposed)
-    const phaserRef = useRef<RefPhaserGame | null>(null);
-    
-    const logScene = () => {
+  //  References to the PhaserGame component (game and scene are exposed)
+  const phaserRef = useRef<RefPhaserGame | null>(null);
 
-        if (phaserRef.current) {
-            const scene = phaserRef.current.scene;
-
-            if (scene) {
-                console.log(scene);
-            }
-        }
-    };
-
-    return (
-        <div id="app">
-            <PhaserGame ref={phaserRef}  />
-            <div>
-                <GameUI scene={phaserRef.current}/>
-            </div>
-        </div>
-    );
+  return (
+    <div id="app">
+      <PhaserGame ref={phaserRef} />
+      <div>
+        <GameUI scene={phaserRef} />
+      </div>
+    </div>
+  );
 }
 
 export default App;

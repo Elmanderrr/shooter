@@ -16,8 +16,9 @@ export const SIZES = {
   },
 };
 
-export const LEVELS = {
+export const SCENES = {
   FIRST: 'first',
+  START: 'start',
 };
 
 export const SPRITES = {

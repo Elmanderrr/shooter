@@ -1,8 +1,18 @@
-function GameUI(scene: any) {
-    console.log(scene);
+import { EventBus } from '../EventBus.ts';
+import { RefPhaserGame } from '../PhaserGame.tsx';
+import { Start } from '../scenes/Start.ts';
+
+function GameUI(ref: any) {
+  function changeScene() {
+    const scene = ref.scene.current.scene as Start;
+    scene.changeScene();
+  }
+
   return (
     <>
-      <div>twstawefawefwae</div>
+      <div>
+        <button onClick={changeScene}>start game</button>
+      </div>
     </>
   );
 }

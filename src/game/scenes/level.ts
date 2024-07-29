@@ -2,20 +2,15 @@ import Phaser from 'phaser';
 import PhaserNavMeshPlugin, { PhaserNavMesh } from 'phaser-navmesh/dist/phaser-navmesh/src';
 import levelJSON from '../../../public/assets/leve1-horizontal.json';
 import { Bullet } from '../entities/bullet/bullet.ts';
-import { Bullets } from '../entities/bullet/bullets.ts';
 import { Enemy } from '../entities/enemy.ts';
 import { Player } from '../entities/player.ts';
-import { EventBus } from '../EventBus.ts';
-import { LAYERS, LEVELS, SIZES, SPRITES } from '../utils/constats.ts';
+import { LAYERS, SCENES, SIZES, SPRITES } from '../utils/constats.ts';
 import { BattleController } from '../controllers/battle.controller.ts';
-import { PreloadManager } from '../helpers/preload-manager.ts';
 
 export class Level extends Phaser.Scene {
   public player!: Player;
 
   public enemiesGroup!: Phaser.GameObjects.Group;
-
-  public bullets!: Bullets;
 
   public map!: Phaser.Tilemaps.Tilemap;
 
@@ -33,17 +28,12 @@ export class Level extends Phaser.Scene {
   public waterLayer!: Phaser.Tilemaps.TilemapLayer;
 
   constructor() {
-    super(LEVELS.FIRST);
-  }
-
-  preload() {
-    PreloadManager.preloadForLevel(this, LEVELS.FIRST);
+    super(SCENES.FIRST);
   }
 
   create() {
     this.animations();
     this.createMap();
-
     this.player = new Player(this, 5 * SIZES.TILE, 200, SPRITES.PLAYER);
 
     this.createEnemies();
@@ -60,7 +50,6 @@ export class Level extends Phaser.Scene {
       undefined,
       Math.floor(SIZES.TILE / 3),
     );
-      EventBus.emit('current-scene-ready', this);
   }
 
   update(_: number, delta: number) {
@@ -89,7 +78,7 @@ export class Level extends Phaser.Scene {
 
     this.tileset = this.map.addTilesetImage(
       levelJSON.tilesets[0].name,
-      LEVELS.FIRST,
+      SCENES.FIRST,
       SIZES.TILE,
       SIZES.TILE,
     )!;
