@@ -31,3 +31,7 @@ export const SPRITES = {
     SLASHING: 'Slashing',
   },
 };
+
+export const IMAGES = {
+  LASER: 'Laser',
+};

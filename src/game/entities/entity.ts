@@ -4,7 +4,15 @@ import { Level } from '../scenes/level.ts';
 export interface EntityConfig {
   health: number;
   power: number;
-  speed: number;
+
+  /**
+   * Pixels per second
+   */
+  speed: number | undefined;
+
+  /**
+   * milliseconds
+   */
   attackSpeed: number;
 }
 

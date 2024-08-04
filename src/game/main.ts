@@ -12,7 +12,6 @@ const config: Phaser.Types.Core.GameConfig = {
   width: levelJSON.width * SIZES.TILE,
   height: levelJSON.height * SIZES.TILE,
   title: 'shooter',
-  backgroundColor: 'orange',
   scene: [Preloader, Start, Level],
   plugins: {
     scene: [
@@ -27,7 +26,7 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      debug: false,
     },
   },
   scale: {

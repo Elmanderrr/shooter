@@ -55,10 +55,22 @@ export class Level extends Phaser.Scene {
   update(_: number, delta: number) {
     this.player.update(delta);
     this.enemiesGroup.getChildren().forEach((e) => (e as Enemy).update(this.player));
+
+    if (this.enemiesGroup.countActive() === 0) {
+      const boss = new Enemy(this, 500, 200, SPRITES.ORC.BASE, {
+        health: 500,
+        speed: 50,
+        power: 50,
+        attackSpeed: 2000,
+      });
+      boss.setScale(1);
+
+      this.enemiesGroup.add(boss);
+    }
   }
 
   private setUpPhysics() {
-    this.player.setCollideWorldBounds(true);
+    // this.player.setCollideWorldBounds(true);
 
     if (this.nonWalkableLayer) {
       this.physics.add.collider(this.player, this.nonWalkableLayer);
@@ -94,7 +106,7 @@ export class Level extends Phaser.Scene {
     this.enemiesGroup = this.add.group({
       key: SPRITES.ORC.BASE,
       classType: Enemy,
-      quantity: 15,
+      quantity: 12,
       createCallback: (p) => {
         (p as Enemy).player = this.player;
       },
@@ -128,7 +140,7 @@ export class Level extends Phaser.Scene {
         prefix: '0_Orc_Dying_',
         suffix: '',
       }),
-      frameRate: 25,
+      frameRate: 10,
     });
 
     this.anims.create({

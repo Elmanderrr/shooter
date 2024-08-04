@@ -1,5 +1,3 @@
-import { EventBus } from '../EventBus.ts';
-import { RefPhaserGame } from '../PhaserGame.tsx';
 import { Start } from '../scenes/Start.ts';
 
 function GameUI(ref: any) {

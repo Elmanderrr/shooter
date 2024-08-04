@@ -9,6 +9,7 @@ export class Start extends Phaser.Scene {
 
   create() {
     EventBus.emit('current-scene-ready', this);
+    this.changeScene();
   }
 
   changeScene() {

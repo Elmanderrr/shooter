@@ -1,26 +1,17 @@
 import Phaser from 'phaser';
+import { PrimarySkill, SecondarySkill, SkillsSet } from '../models/player.model.ts';
 import { Level } from '../scenes/level.ts';
+import { Teleport } from '../skills/Teleport.ts';
 import { Entity } from './entity.ts';
 
 export class Player extends Entity {
-  private moveSpeed = 90;
-
-  public idle: boolean | undefined = undefined;
-
-  public maxHealth = 100;
-
-  public alive = true;
-
-  public power = 50;
-
-  public health = this.maxHealth;
-
-  public healthBar?: Phaser.GameObjects.Rectangle;
-
-  public attackSpeed = 300; // ms
-
   constructor(scene: Level, x: number, y: number, texture?: string) {
-    super(scene, x, y, texture);
+    super(scene, x, y, texture, {
+      power: 60,
+      attackSpeed: 1000,
+      health: 100,
+      speed: undefined,
+    });
     this.setSize(28, 32);
     this.setOffset(10, 16);
     this.setScale(0.8);
@@ -30,18 +21,28 @@ export class Player extends Entity {
     this.drawHealthBar();
 
     this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      const walkable = this.isWalkable(pointer);
-
-      if (walkable) {
-        this.y = pointer.y;
+      if (this.alive && this.isWalkable(pointer)) {
+        this.setY(pointer.y);
       }
     });
+
+    this.teleportSkill = new Teleport(this.scene, this, 1000);
   }
+
+  public skillsSet: SkillsSet = {
+    primary: PrimarySkill.LASER,
+    secondary: SecondarySkill.TELEPORT,
+  };
+
+  public teleportSkill!: Teleport;
+
+  public healthBar?: Phaser.GameObjects.Rectangle;
 
   public update(delta: number) {
     if (!this.alive) {
       return;
     }
+
     this.movementsController(delta);
 
     if (this.healthBar) {
@@ -91,23 +92,20 @@ export class Player extends Entity {
   }
 
   private movementsController(delta: number) {
-    const keyA = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    const keyD = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    const velocity = (delta / 1000) * this.moveSpeed;
-
-    if (keyA.isDown) {
-      this.play('left', true);
-      this.setVelocity(-velocity * this.moveSpeed, 0);
-      this.idle = false;
-    } else if (keyD.isDown) {
-      this.play('right', true);
-      this.setVelocity(velocity * this.moveSpeed, 0);
-      this.idle = false;
-    } else {
-      this.setVelocity(0, 0);
-      this.stop();
-      this.idle = true;
-    }
+    // const keyA = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    // const keyD = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    // const keyFour = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
+    // const velocity = (delta / 1000) * this.speed;
+    // if (keyA.isDown) {
+    //   this.play('left', true);
+    //   this.setVelocity(-velocity * this.speed, 0);
+    // } else if (keyD.isDown) {
+    //   this.play('right', true);
+    //   this.setVelocity(velocity * this.speed, 0);
+    // } else {
+    //   this.setVelocity(0, 0);
+    //   this.stop();
+    // }
   }
 
   public takeDamage(amount: number) {
@@ -141,5 +139,9 @@ export class Player extends Entity {
         this.scene.walkableLayer,
       )
     );
+  }
+
+  public teleport(x: number, y: number) {
+    this.teleportSkill.activate(x, y);
   }
 }

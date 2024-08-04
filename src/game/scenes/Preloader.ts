@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-import { SCENES, SIZES, SPRITES } from '../utils/constats.ts';
+import { IMAGES, SCENES, SIZES, SPRITES } from '../utils/constats.ts';
 
 export class Preloader extends Scene {
   constructor() {
@@ -9,6 +9,7 @@ export class Preloader extends Scene {
   preload() {
     this.load.image(SCENES.FIRST, '/assets/level1.png');
     this.load.image(SPRITES.BULLET, '/assets/elements/bullets/01.png');
+    this.load.image(IMAGES.LASER, '/assets/elements/laser/beam.png');
     this.load.tilemapTiledJSON('map', '/assets/leve1-horizontal.json');
     this.load.spritesheet(SPRITES.PLAYER, '/assets/characters/player.png', {
       frameWidth: SIZES.PLAYER.WIDTH,

@@ -1,9 +1,11 @@
-import { Level } from '../scenes/level.ts';
-import { Player } from '../entities/player.ts';
 import Phaser from 'phaser';
+import { Bullet } from '../entities/bullet/bullet.ts';
 import { Bullets } from '../entities/bullet/bullets.ts';
 import { Enemy } from '../entities/enemy.ts';
-import { Bullet } from '../entities/bullet/bullet.ts';
+import { Laser } from '../entities/laser/Laser.ts';
+import { Player } from '../entities/player.ts';
+import { PrimarySkill } from '../models/player.model.ts';
+import { Level } from '../scenes/level.ts';
 
 export class BattleController {
   constructor(
@@ -12,24 +14,42 @@ export class BattleController {
     private enemies: Phaser.GameObjects.Group,
   ) {
     this.bullets = new Bullets(this.scene);
+    this.laser = new Laser(this.scene, this.player.x, this.player.y);
 
     this.playerShoot();
     this.bulletsCollider();
+    this.events();
   }
 
   public bullets!: Bullets;
 
+  public laser!: Laser;
+
+  private lastLaserHits: Map<Enemy, number> = new Map();
+
   private playerShoot() {
     const timer = this.scene.time.addEvent({
       callback: () => {
-        if (this.player.alive) {
-          this.bullets.fireBullet(this.player.x, this.player.y);
+        if (this.player.alive && this.enemies.countActive() > 0) {
+          // if (!this.player.idle) {
+          //   return;
+          // }
+
+          if (this.player.skillsSet.primary === PrimarySkill.AUTO_GUN) {
+            this.bullets.fireBullet(this.player.x, this.player.y, this.fireDirection());
+          }
+
+          if (this.player.skillsSet.primary === PrimarySkill.LASER) {
+            this.laser.fire(
+              this.fireDirection() * this.scene.map.widthInPixels,
+              this.player,
+              this.player.attackSpeed / 2,
+            );
+          }
         } else {
           timer.destroy();
         }
       },
-      callbackScope: this,
-
       delay: this.player.attackSpeed,
       loop: true,
     });
@@ -45,5 +65,44 @@ export class BattleController {
         enemy.takeDamage(this.player.power);
       }
     });
+
+    this.scene.physics.add.collider(this.enemies, this.laser, (e) => {
+      const enemy = e as Enemy;
+
+      const enemyLastHitTime = this.lastLaserHits.get(enemy) || 0;
+
+      if (this.scene.time.now > enemyLastHitTime && enemy.alive) {
+        this.lastLaserHits.set(enemy, this.scene.time.now + 500);
+        enemy.takeDamage(this.player.power);
+      } else if (!enemy.alive) {
+        this.lastLaserHits.delete(enemy);
+      }
+    });
+  }
+
+  private events() {
+    this.scene.input.keyboard!.on('keyup', (event: KeyboardEvent) => {
+      if (event.key === '4') {
+        this.usePlayerTeleportAbility();
+      }
+    });
+  }
+
+  private usePlayerTeleportAbility() {
+    const closest = this.scene.physics.closest(this.player, this.enemies.getChildren()) as Enemy;
+
+    if (!closest) {
+      return;
+    }
+
+    const teleportXDestination = closest.x > this.player.x ? 800 : 150;
+
+    this.player.teleport(teleportXDestination, this.player.y);
+  }
+
+  private fireDirection(): 1 | -1 {
+    const closest = this.scene.physics.closest(this.player, this.enemies.getChildren()) as Enemy;
+
+    return closest && closest.x > this.player.x ? 1 : -1;
   }
 }

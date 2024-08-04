@@ -3,18 +3,24 @@ import Phaser from 'phaser';
 import { Position } from '../models/general.model.ts';
 import { Level } from '../scenes/level.ts';
 import { SIZES } from '../utils/constats.ts';
-import { Entity } from './entity.ts';
+import { Entity, EntityConfig } from './entity.ts';
 import { Player } from './player.ts';
 import ANIMATION_COMPLETE = Phaser.Animations.Events.ANIMATION_COMPLETE;
 
 export class Enemy extends Entity {
-  constructor(scene: Level, x: number, y: number, texture?: string) {
-    super(scene, x, y, texture, {
-      health: 100,
-      speed: 50,
-      power: 10,
-      attackSpeed: 1000,
-    });
+  constructor(scene: Level, x: number, y: number, texture?: string, config?: EntityConfig) {
+    super(
+      scene,
+      x,
+      y,
+      texture,
+      config ?? {
+        health: 100,
+        speed: 50,
+        power: 10,
+        attackSpeed: 1000,
+      },
+    );
 
     this.setScale(0.5);
     this.setSize(this.displayWidth, this.displayHeight);
@@ -30,7 +36,7 @@ export class Enemy extends Entity {
 
   private destination?: Position;
 
-  private healthBar?: Phaser.GameObjects.Rectangle;
+  private healthBar!: Phaser.GameObjects.Rectangle;
 
   private attackRange = 50;
 
@@ -86,6 +92,7 @@ export class Enemy extends Entity {
 
   private moveEnemyTo(destination: Position) {
     const distance = Phaser.Math.Distance.Between(this.x, this.y, destination.x, destination.y);
+    // todo play with physical methods accelerateTo, goTo etc
     this.scene.tweens.add({
       targets: this,
       x: destination.x,
@@ -108,6 +115,7 @@ export class Enemy extends Entity {
     const anim = this.play('dying');
     anim.on(ANIMATION_COMPLETE, () => {
       this.destroy();
+      this.healthBar.destroy();
     });
     this.scene.tweens.killTweensOf(this);
     this.pathToPlayer = [];
@@ -130,7 +138,8 @@ export class Enemy extends Entity {
 
   public takeDamage(amount: number) {
     super.takeDamage(amount);
-    this.healthBar!.width = 32 * (this.health / this.maxHealth);
+    const newWidthValue = 32 * (this.health / this.maxHealth);
+    this.healthBar.width = newWidthValue < 0 ? 0 : newWidthValue;
 
     if (this.health <= 0) {
       this.die();

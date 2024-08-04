@@ -16,11 +16,11 @@ export class Bullet extends Entity {
     this.setOffset(45, 45);
   }
 
-  fire(x: number, y: number) {
+  fire(x: number, y: number, direction: 1 | -1) {
     this.body?.reset(x, y);
     this.setActive(true);
     this.setVisible(true);
-    this.setVelocity(this.scene.map.width * SIZES.TILE, 0);
+    this.setVelocity(direction * this.scene.map.width * SIZES.TILE, 0);
   }
 
   kill() {
