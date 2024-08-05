@@ -20,7 +20,6 @@ export class BattleController {
 
     this.playerShoot();
     this.bulletsCollider();
-    this.events();
   }
 
   public bullets!: Bullets;
@@ -76,14 +75,6 @@ export class BattleController {
         this.lastLaserHits.delete(enemy);
       }
     });
-  }
-
-  private events() {
-    // this.scene.input.keyboard!.on('keyup', (event: KeyboardEvent) => {
-    //   if (event.key === '4') {
-    //     this.usePlayerTeleportAbility();
-    //   }
-    // });
   }
 
   public useSkill(skill: BaseSkill) {

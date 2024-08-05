@@ -4,7 +4,6 @@ import { EventBus } from './game/EventBus.ts';
 import { RefPhaserGame, PhaserGame } from './game/PhaserGame';
 import { Level } from './game/scenes/level.ts';
 import { BaseSkill } from './game/skills/BaseSkill.ts';
-import { Teleport } from './game/skills/Teleport.ts';
 import { Ability } from './game/ui/Skill.tsx';
 import { EVENTS } from './game/utils/events.ts';
 import { PlayerState } from './game/utils/StateManager.ts';
@@ -17,7 +16,6 @@ export interface GameScale {
 }
 
 function App() {
-  //  References to the PhaserGame component (game and scene are exposed)
   const phaserRef = useRef<RefPhaserGame | null>(null);
   const [skills, setSkills] = useState<BaseSkill[]>([]);
   const [scene, setScene] = useState<Level | null>(null);
@@ -80,9 +78,9 @@ function App() {
             top: calcPosition().top + 'px',
           }}
         >
-          {skills.map((skill) => (
-            <Ability key={skill.name} onClick={executeSkill} skill={skill} />
-          ))}
+          {skills.map((skill) => {
+            return <Ability key={skill.name} onClick={executeSkill} skill={skill} />;
+          })}
         </div>
       );
     }

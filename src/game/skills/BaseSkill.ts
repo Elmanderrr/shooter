@@ -33,10 +33,14 @@ export abstract class BaseSkill {
     if (this.ready) {
       this.lastUsedTime = Date.now();
     } else {
-      const remainToReady = Date.now() - this.lastUsedTime;
-
-      console.log(`teleport is on cooldown. ${(this.cooldown - remainToReady) / 1000} s left`);
+      console.log(`teleport is on cooldown. ${this.cooldownLeft()} s left`);
     }
+  }
+
+  public cooldownLeft() {
+    const remainToReady = Date.now() - this.lastUsedTime;
+
+    return this.ready ? 0 : (this.cooldown - remainToReady) / 1000;
   }
 
   /**

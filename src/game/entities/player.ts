@@ -27,7 +27,7 @@ export class Player extends Entity {
       }
     });
 
-    this.skills = [new Teleport(this.scene, this, 1000)];
+    this.skills = [new Teleport(this.scene, this, 5000)];
     this.scene.state.setPlayerState({
       xp: this.experience,
       xpToLvlUp: this.experienceToNextLevel[this.level + 1],
