@@ -1,17 +1,24 @@
-import { Start } from '../scenes/Start.ts';
+import { EVENTS } from '../utils/events.ts';
+import { useState } from 'react';
+import { EventBus } from '../EventBus.ts';
+import { PlayerState } from '../utils/StateManager.ts';
 
 function GameUI(ref: any) {
-  function changeScene() {
-    const scene = ref.scene.current.scene as Start;
-    scene.changeScene();
-  }
+  const [playerState, setPlayerState] = useState<PlayerState>(null);
 
+  EventBus.on(EVENTS.PLAYER_STATE_CHANGED, (state: PlayerState) => {
+    console.log(state);
+    setPlayerState({
+      ...playerState,
+      ...state,
+    });
+  });
   return (
-    <>
-      <div>
-        <button onClick={changeScene}>start game</button>
-      </div>
-    </>
+    <div>
+      killed : {playerState?.killed} <br />
+      xp: {playerState?.xp} <br />
+      lvl: {playerState?.lvl}
+    </div>
   );
 }
 

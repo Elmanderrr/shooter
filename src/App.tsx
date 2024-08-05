@@ -9,9 +9,9 @@ function App() {
   return (
     <div id="app">
       <PhaserGame ref={phaserRef} />
-      {/*<div>*/}
-      {/*  <GameUI scene={phaserRef} />*/}
-      {/*</div>*/}
+      <div>
+        <GameUI scene={phaserRef} />
+      </div>
     </div>
   );
 }

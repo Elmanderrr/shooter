@@ -38,12 +38,30 @@ export class Player extends Entity {
 
   public healthBar?: Phaser.GameObjects.Rectangle;
 
-  public update(delta: number) {
+  public level: number = 1;
+
+  public experience: number = 0;
+
+  private experienceModifier = 2;
+
+  public experienceToNextLevel = Array.from(new Array(100)).reduce(
+    (acc: { [level: string]: number }, _, index) => {
+      const level = index + 2;
+
+      return {
+        ...acc,
+        [level]: level === 2 ? 100 : index * 100 * this.experienceModifier,
+      };
+    },
+    {} as { [level: string]: number },
+  );
+
+  public credits: number = 0;
+
+  public update() {
     if (!this.alive) {
       return;
     }
-
-    this.movementsController(delta);
 
     if (this.healthBar) {
       this.healthBar!.x = this.x;
@@ -91,23 +109,6 @@ export class Player extends Entity {
     this.healthBar = this.scene.add.rectangle(0, 0, this.width, 5, 0x4287f5);
   }
 
-  private movementsController(delta: number) {
-    // const keyA = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    // const keyD = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    // const keyFour = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
-    // const velocity = (delta / 1000) * this.speed;
-    // if (keyA.isDown) {
-    //   this.play('left', true);
-    //   this.setVelocity(-velocity * this.speed, 0);
-    // } else if (keyD.isDown) {
-    //   this.play('right', true);
-    //   this.setVelocity(velocity * this.speed, 0);
-    // } else {
-    //   this.setVelocity(0, 0);
-    //   this.stop();
-    // }
-  }
-
   public takeDamage(amount: number) {
     super.takeDamage(amount);
     this.healthBar!.width = this.width * (this.health / this.maxHealth);
@@ -143,5 +144,32 @@ export class Player extends Entity {
 
   public teleport(x: number, y: number) {
     this.teleportSkill.activate(x, y);
+  }
+
+  public earnExperience(amount: number) {
+    this.experience += amount;
+    if (this.experience >= this.experienceToNextLevel[this.level + 1]) {
+      this.lvlUp();
+    }
+    this.scene.state.setPlayerState({
+      xp: this.experience,
+    });
+  }
+
+  public earnCredits(amount: number) {
+    this.credits += amount;
+    // console.log('credits', this.credits);
+  }
+
+  public spendCredits(amount: number) {
+    this.credits -= amount;
+  }
+
+  public lvlUp() {
+    this.level += 1;
+    this.experience = 0;
+    this.scene.state.setPlayerState({
+      lvl: this.level,
+    });
   }
 }

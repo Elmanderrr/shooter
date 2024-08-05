@@ -6,6 +6,7 @@ import { Laser } from '../entities/laser/Laser.ts';
 import { Player } from '../entities/player.ts';
 import { PrimarySkill } from '../models/player.model.ts';
 import { Level } from '../scenes/level.ts';
+import { SPRITES } from '../utils/constats.ts';
 
 export class BattleController {
   constructor(
@@ -31,10 +32,6 @@ export class BattleController {
     const timer = this.scene.time.addEvent({
       callback: () => {
         if (this.player.alive && this.enemies.countActive() > 0) {
-          // if (!this.player.idle) {
-          //   return;
-          // }
-
           if (this.player.skillsSet.primary === PrimarySkill.AUTO_GUN) {
             this.bullets.fireBullet(this.player.x, this.player.y, this.fireDirection());
           }
@@ -104,5 +101,36 @@ export class BattleController {
     const closest = this.scene.physics.closest(this.player, this.enemies.getChildren()) as Enemy;
 
     return closest && closest.x > this.player.x ? 1 : -1;
+  }
+
+  update() {
+    if (this.enemies.countActive() === 0) {
+      this.respawnBossLevel();
+    }
+  }
+
+  private respawnBossLevel() {
+    const boss = new Enemy(
+      this.scene,
+      500,
+      200,
+      SPRITES.ORC.BASE,
+      {
+        health: 500,
+        speed: 50,
+        power: 50,
+        attackSpeed: 2000,
+      },
+      {
+        reward: {
+          credits: 5,
+          experience: 40,
+        },
+        attackRange: 50,
+      },
+    );
+    boss.setScale(1);
+
+    this.enemies.add(boss);
   }
 }

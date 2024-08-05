@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { EventBus } from '../EventBus.ts';
 import { SCENES } from '../utils/constats.ts';
+import { EVENTS } from '../utils/events.ts';
 
 export class Start extends Phaser.Scene {
   constructor() {
@@ -8,7 +9,7 @@ export class Start extends Phaser.Scene {
   }
 
   create() {
-    EventBus.emit('current-scene-ready', this);
+    EventBus.emit(EVENTS.CURRENT_SCENE_READY, this);
     this.changeScene();
   }
 

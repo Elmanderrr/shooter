@@ -1,24 +1,39 @@
 import Phaser from 'phaser';
 
-import { Position } from '../models/general.model.ts';
+import { Position, Reward } from '../models/general.model.ts';
 import { Level } from '../scenes/level.ts';
 import { SIZES } from '../utils/constats.ts';
 import { Entity, EntityConfig } from './entity.ts';
 import { Player } from './player.ts';
 import ANIMATION_COMPLETE = Phaser.Animations.Events.ANIMATION_COMPLETE;
+import { EnemyEntity, EnemyEntityConfig } from './enemyEntity.ts';
 
-export class Enemy extends Entity {
-  constructor(scene: Level, x: number, y: number, texture?: string, config?: EntityConfig) {
+export class Enemy extends EnemyEntity {
+  constructor(
+    scene: Level,
+    x: number,
+    y: number,
+    texture: string,
+    entityConfig: EntityConfig,
+    enemyConfig: EnemyEntityConfig,
+  ) {
     super(
       scene,
       x,
       y,
       texture,
-      config ?? {
+      entityConfig ?? {
         health: 100,
         speed: 50,
         power: 10,
         attackSpeed: 1000,
+      },
+      enemyConfig ?? {
+        reward: {
+          credits: 1,
+          experience: 10,
+        },
+        attackRange: 50,
       },
     );
 
@@ -37,8 +52,6 @@ export class Enemy extends Entity {
   private destination?: Position;
 
   private healthBar!: Phaser.GameObjects.Rectangle;
-
-  private attackRange = 50;
 
   public timer?: Phaser.Time.TimerEvent;
 

@@ -6,6 +6,7 @@ import { Enemy } from '../entities/enemy.ts';
 import { Player } from '../entities/player.ts';
 import { LAYERS, SCENES, SIZES, SPRITES } from '../utils/constats.ts';
 import { BattleController } from '../controllers/battle.controller.ts';
+import { StateManager } from '../utils/StateManager.ts';
 
 export class Level extends Phaser.Scene {
   public player!: Player;
@@ -17,6 +18,8 @@ export class Level extends Phaser.Scene {
   private tileset!: Phaser.Tilemaps.Tileset;
 
   public battleCtrl!: BattleController;
+
+  public state: StateManager = new StateManager();
 
   public navMeshPlugin: PhaserNavMeshPlugin = this['navMeshPlugin'];
 
@@ -42,6 +45,12 @@ export class Level extends Phaser.Scene {
 
     this.setUpPhysics();
 
+    this.state.setPlayerState({
+      lvl: this.player.level,
+      xp: this.player.experience,
+      killed: 0,
+    });
+
     // building meshes for pathfinding
     this.phaserNavMesh = this.navMeshPlugin.buildMeshFromTilemap(
       'mesh',
@@ -52,21 +61,10 @@ export class Level extends Phaser.Scene {
     );
   }
 
-  update(_: number, delta: number) {
-    this.player.update(delta);
+  update() {
+    this.player.update();
     this.enemiesGroup.getChildren().forEach((e) => (e as Enemy).update(this.player));
-
-    if (this.enemiesGroup.countActive() === 0) {
-      const boss = new Enemy(this, 500, 200, SPRITES.ORC.BASE, {
-        health: 500,
-        speed: 50,
-        power: 50,
-        attackSpeed: 2000,
-      });
-      boss.setScale(1);
-
-      this.enemiesGroup.add(boss);
-    }
+    this.battleCtrl.update();
   }
 
   private setUpPhysics() {
@@ -105,6 +103,16 @@ export class Level extends Phaser.Scene {
   private createEnemies() {
     this.enemiesGroup = this.add.group({
       key: SPRITES.ORC.BASE,
+      maxSize: 12,
+      removeCallback: (e) => {
+        const enemy = e as Enemy;
+
+        this.player.earnExperience(enemy.reward.experience);
+        this.player.earnCredits(enemy.reward.credits);
+        this.state.setPlayerState({
+          killed: this.enemiesGroup.getTotalFree(),
+        });
+      },
       classType: Enemy,
       quantity: 12,
       createCallback: (p) => {
