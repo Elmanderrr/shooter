@@ -1,6 +1,13 @@
+import { SecondarySkill } from '../models/player.model.ts';
 import { BaseSkill } from './BaseSkill.ts';
 
 export class Teleport extends BaseSkill {
+  name = SecondarySkill.TELEPORT;
+
+  hotKey = '4';
+
+  iconPath = './assets/elements/skills/teleport.png';
+
   public activate(x: number, y: number): void {
     if (this.ready) {
       this.blink(x, y);

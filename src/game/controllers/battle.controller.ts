@@ -4,8 +4,9 @@ import { Bullets } from '../entities/bullet/bullets.ts';
 import { Enemy } from '../entities/enemy.ts';
 import { Laser } from '../entities/laser/Laser.ts';
 import { Player } from '../entities/player.ts';
-import { PrimarySkill } from '../models/player.model.ts';
+import { PrimarySkill, SecondarySkill } from '../models/player.model.ts';
 import { Level } from '../scenes/level.ts';
+import { BaseSkill } from '../skills/BaseSkill.ts';
 import { SPRITES } from '../utils/constats.ts';
 
 export class BattleController {
@@ -78,14 +79,28 @@ export class BattleController {
   }
 
   private events() {
-    this.scene.input.keyboard!.on('keyup', (event: KeyboardEvent) => {
-      if (event.key === '4') {
+    // this.scene.input.keyboard!.on('keyup', (event: KeyboardEvent) => {
+    //   if (event.key === '4') {
+    //     this.usePlayerTeleportAbility();
+    //   }
+    // });
+  }
+
+  public useSkill(skill: BaseSkill) {
+    switch (skill.name) {
+      case SecondarySkill.TELEPORT:
         this.usePlayerTeleportAbility();
-      }
-    });
+        break;
+      default:
+        break;
+    }
   }
 
   private usePlayerTeleportAbility() {
+    if (!this.player.alive) {
+      return;
+    }
+
     const closest = this.scene.physics.closest(this.player, this.enemies.getChildren()) as Enemy;
 
     if (!closest) {

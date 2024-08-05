@@ -4,6 +4,7 @@ import { EVENTS } from './events.ts';
 export interface PlayerState {
   lvl: number;
   xp: number;
+  xpToLvlUp: number;
   killed: number;
 }
 

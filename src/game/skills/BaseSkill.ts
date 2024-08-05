@@ -10,6 +10,12 @@ export abstract class BaseSkill {
     this.cooldown = cooldown;
   }
 
+  abstract name: string;
+
+  abstract iconPath: string;
+
+  abstract hotKey: string;
+
   public cooldown: number;
 
   public lastUsedTime: number = -Infinity;

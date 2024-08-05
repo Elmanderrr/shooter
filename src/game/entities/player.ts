@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { PrimarySkill, SecondarySkill, SkillsSet } from '../models/player.model.ts';
 import { Level } from '../scenes/level.ts';
+import { BaseSkill } from '../skills/BaseSkill.ts';
 import { Teleport } from '../skills/Teleport.ts';
 import { Entity } from './entity.ts';
 
@@ -26,7 +27,12 @@ export class Player extends Entity {
       }
     });
 
-    this.teleportSkill = new Teleport(this.scene, this, 1000);
+    this.skills = [new Teleport(this.scene, this, 1000)];
+    this.scene.state.setPlayerState({
+      xp: this.experience,
+      xpToLvlUp: this.experienceToNextLevel[this.level + 1],
+      lvl: this.level,
+    });
   }
 
   public skillsSet: SkillsSet = {
@@ -34,7 +40,7 @@ export class Player extends Entity {
     secondary: SecondarySkill.TELEPORT,
   };
 
-  public teleportSkill!: Teleport;
+  public skills: BaseSkill[] = [];
 
   public healthBar?: Phaser.GameObjects.Rectangle;
 
@@ -143,7 +149,10 @@ export class Player extends Entity {
   }
 
   public teleport(x: number, y: number) {
-    this.teleportSkill.activate(x, y);
+    const tp = this.skills.find((s) => s instanceof Teleport) as Teleport;
+    if (tp) {
+      tp.activate(x, y);
+    }
   }
 
   public earnExperience(amount: number) {
@@ -170,6 +179,7 @@ export class Player extends Entity {
     this.experience = 0;
     this.scene.state.setPlayerState({
       lvl: this.level,
+      xpToLvlUp: this.experienceToNextLevel[this.level + 1],
     });
   }
 }

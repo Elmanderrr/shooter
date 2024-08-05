@@ -25,13 +25,13 @@
         "build": "vite build --config vite/config.prod.mjs"
     },
     "dependencies": {
-        "phaser": "^3.80.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
         "easystarjs": "^0.4.4",
         "lodash-es": "^4.17.21",
+        "phaser": "^3.80.1",
         "phaser-navmesh": "^2.3.1",
         "prettier": "^3.3.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "vite-plugin-checker": "^0.7.2"
     },
     "devDependencies": {
@@ -41,11 +41,15 @@
         "@typescript-eslint/eslint-plugin": "^7.13.1",
         "@typescript-eslint/parser": "^7.13.1",
         "@vitejs/plugin-react": "^4.3.1",
+        "autoprefixer": "^10.4.20",
         "eslint": "^8.57.0",
         "eslint-plugin-react-hooks": "^4.6.2",
         "eslint-plugin-react-refresh": "^0.4.7",
-        "typescript": "^5.2.2",
+        "postcss": "^8.4.40",
+        "sass": "^1.77.8",
+        "tailwindcss": "^3.4.7",
         "terser": "^5.28.1",
+        "typescript": "^5.2.2",
         "vite": "^5.3.1"
     },
     "prettier": {

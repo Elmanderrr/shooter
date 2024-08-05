@@ -1,3 +1,5 @@
+import { BaseSkill } from '../skills/BaseSkill.ts';
+
 export enum PrimarySkill {
   AUTO_GUN = 'AUTO_GUN',
   LASER = 'LASER',
@@ -10,4 +12,8 @@ export enum SecondarySkill {
 export interface SkillsSet {
   primary: PrimarySkill;
   secondary: SecondarySkill;
+}
+
+export interface Skill {
+  skill: BaseSkill;
 }

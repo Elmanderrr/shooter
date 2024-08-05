@@ -4,8 +4,10 @@ import levelJSON from '../../../public/assets/leve1-horizontal.json';
 import { Bullet } from '../entities/bullet/bullet.ts';
 import { Enemy } from '../entities/enemy.ts';
 import { Player } from '../entities/player.ts';
+import { EventBus } from '../EventBus.ts';
 import { LAYERS, SCENES, SIZES, SPRITES } from '../utils/constats.ts';
 import { BattleController } from '../controllers/battle.controller.ts';
+import { EVENTS } from '../utils/events.ts';
 import { StateManager } from '../utils/StateManager.ts';
 
 export class Level extends Phaser.Scene {
@@ -59,6 +61,11 @@ export class Level extends Phaser.Scene {
       undefined,
       Math.floor(SIZES.TILE / 3),
     );
+    EventBus.emit(EVENTS.CURRENT_SCENE_READY, this);
+    EventBus.emit(EVENTS.RESIZE, this.sys.game.scale);
+    this.sys.game.scale.on('resize', () => {
+      EventBus.emit(EVENTS.RESIZE, this.sys.game.scale);
+    });
   }
 
   update() {
