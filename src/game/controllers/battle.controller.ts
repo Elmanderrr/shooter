@@ -6,7 +6,7 @@ import { Laser } from '../entities/laser/Laser.ts';
 import { Player } from '../entities/player.ts';
 import { PrimarySkill, SecondarySkill } from '../models/player.model.ts';
 import { Level } from '../scenes/level.ts';
-import { BaseSkill } from '../skills/BaseSkill.ts';
+import { Skill } from '../skills/Skill.ts';
 import { SPRITES } from '../utils/constats.ts';
 
 export class BattleController {
@@ -77,10 +77,13 @@ export class BattleController {
     });
   }
 
-  public useSkill(skill: BaseSkill) {
+  public useSkill(skill: Skill) {
     switch (skill.name) {
       case SecondarySkill.TELEPORT:
         this.usePlayerTeleportAbility();
+        break;
+      case SecondarySkill.GRENADE:
+        this.player.granade(0, 0);
         break;
       default:
         break;

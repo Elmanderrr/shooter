@@ -1,7 +1,7 @@
 import { Entity } from '../entities/entity.ts';
 import { Level } from '../scenes/level.ts';
 
-export abstract class BaseSkill {
+export abstract class Skill {
   constructor(
     protected scene: Level,
     protected entity: Entity,
@@ -47,5 +47,5 @@ export abstract class BaseSkill {
    * Abstract method to define the skill's behavior.
    * Must be implemented by subclasses.
    */
-  protected abstract activate(...args: unknown[]): void;
+  public abstract activate(...args: unknown[]): void;
 }

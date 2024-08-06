@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { EventBus } from './game/EventBus.ts';
 import { RefPhaserGame, PhaserGame } from './game/PhaserGame';
 import { Level } from './game/scenes/level.ts';
-import { BaseSkill } from './game/skills/BaseSkill.ts';
+import { Skill } from './game/skills/Skill.ts';
 import { Ability } from './game/ui/Skill.tsx';
 import { EVENTS } from './game/utils/events.ts';
 import { PlayerState } from './game/utils/StateManager.ts';
@@ -17,7 +17,7 @@ export interface GameScale {
 
 function App() {
   const phaserRef = useRef<RefPhaserGame | null>(null);
-  const [skills, setSkills] = useState<BaseSkill[]>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
   const [scene, setScene] = useState<Level | null>(null);
   const [gameSize, setGameSize] = useState<GameScale | null>(null);
   const [playerState, setPlayerState] = useState<PlayerState | null>(null);
@@ -48,23 +48,9 @@ function App() {
         x: scaleManager.canvasBounds.x,
       });
     });
-
-    document.addEventListener('keyup', handleKeyUp);
-
-    return () => {
-      document.removeEventListener('keyup', handleKeyUp);
-    };
   }, [skills]);
 
-  const handleKeyUp = (e: KeyboardEvent) => {
-    const assocSkill = skills.find((s) => s.hotKey == e.key);
-
-    if (assocSkill) {
-      executeSkill(assocSkill);
-    }
-  };
-
-  const executeSkill = (skill: BaseSkill) => {
+  const executeSkill = (skill: Skill) => {
     scene?.battleCtrl.useSkill(skill);
   };
 

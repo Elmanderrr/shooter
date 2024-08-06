@@ -170,5 +170,15 @@ export class Level extends Phaser.Scene {
       repeat: -1,
       frameRate: 15,
     });
+
+    this.anims.create({
+      key: 'right',
+      frames: this.anims.generateFrameNumbers('exp', {
+        prefix: 'Explosion_',
+        start: 24,
+        end: 26,
+      }),
+      frameRate: 9,
+    });
   }
 }

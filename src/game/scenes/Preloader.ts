@@ -32,6 +32,11 @@ export class Preloader extends Scene {
       '/assets/characters/orc/slashing.png',
       '/assets/characters/orc/slashing.json',
     );
+    this.load.atlas(
+      'exp',
+      '/assets/elements/skills/explosion.png',
+      '/assets/elements/skills/explosion.json',
+    );
     this.load.spritesheet(SPRITES.BOAR, '/assets/characters/boar.png', {
       frameWidth: SIZES.ENEMY.WIDTH,
       frameHeight: SIZES.ENEMY.HEIGHT,

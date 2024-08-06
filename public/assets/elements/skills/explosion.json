@@ -1,0 +1,225 @@
+{
+  "textures": [
+    {
+      "image": "texture",
+      "format": "RGBA8888",
+      "size": {
+        "w": 0,
+        "h": 0
+      },
+      "scale": 1,
+      "frames": [
+        {
+          "filename": "Explosion_1",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_2",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 550,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_3",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 1100,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_4",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 0,
+            "y": 550,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_5",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 550,
+            "y": 550,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_6",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 1100,
+            "y": 550,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_7",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 0,
+            "y": 1100,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_8",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 550,
+            "y": 1100,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_9",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 1100,
+            "y": 1100,
+            "w": 550,
+            "h": 550
+          }
+        },
+        {
+          "filename": "Explosion_10",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 550,
+            "h": 550
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 550,
+            "h": 550
+          },
+          "frame": {
+            "x": 0,
+            "y": 1650,
+            "w": 550,
+            "h": 550
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { SecondarySkill } from '../models/player.model.ts';
-import { BaseSkill } from './BaseSkill.ts';
+import { Skill } from './Skill.ts';
 
-export class Teleport extends BaseSkill {
+export class Teleport extends Skill {
   name = SecondarySkill.TELEPORT;
 
   hotKey = '4';

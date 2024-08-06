@@ -1,4 +1,4 @@
-import { BaseSkill } from '../skills/BaseSkill.ts';
+import { Skill } from '../skills/Skill.ts';
 
 export enum PrimarySkill {
   AUTO_GUN = 'AUTO_GUN',
@@ -15,5 +15,5 @@ export interface SkillsSet {
 }
 
 export interface Skill {
-  skill: BaseSkill;
+  skill: Skill;
 }

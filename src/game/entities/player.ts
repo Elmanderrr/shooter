@@ -1,9 +1,10 @@
 import Phaser from 'phaser';
 import { PrimarySkill, SecondarySkill, SkillsSet } from '../models/player.model.ts';
 import { Level } from '../scenes/level.ts';
-import { BaseSkill } from '../skills/BaseSkill.ts';
+import { Skill } from '../skills/Skill.ts';
 import { Teleport } from '../skills/Teleport.ts';
 import { Entity } from './entity.ts';
+import { Granade } from '../skills/Granade.ts';
 
 export class Player extends Entity {
   constructor(scene: Level, x: number, y: number, texture?: string) {
@@ -27,7 +28,7 @@ export class Player extends Entity {
       }
     });
 
-    this.skills = [new Teleport(this.scene, this, 5000)];
+    this.skills = [new Teleport(this.scene, this, 5000), new Granade(this.scene, this, 1000)];
     this.scene.state.setPlayerState({
       xp: this.experience,
       xpToLvlUp: this.experienceToNextLevel[this.level + 1],
@@ -40,7 +41,7 @@ export class Player extends Entity {
     secondary: SecondarySkill.TELEPORT,
   };
 
-  public skills: BaseSkill[] = [];
+  public skills: Skill[] = [];
 
   public healthBar?: Phaser.GameObjects.Rectangle;
 
@@ -152,6 +153,13 @@ export class Player extends Entity {
     const tp = this.skills.find((s) => s instanceof Teleport) as Teleport;
     if (tp) {
       tp.activate(x, y);
+    }
+  }
+
+  public granade(x: number, y: number) {
+    const granade = this.skills.find((s) => s instanceof Granade) as Granade;
+    if (granade) {
+      granade.activate();
     }
   }
 
