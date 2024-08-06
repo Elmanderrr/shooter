@@ -30,6 +30,7 @@ export const SPRITES = {
     DYING: 'Dying',
     SLASHING: 'Slashing',
   },
+  EXPLOSION: 'Explosion',
 };
 
 export const IMAGES = {

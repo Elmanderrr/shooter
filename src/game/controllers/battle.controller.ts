@@ -83,7 +83,12 @@ export class BattleController {
         this.usePlayerTeleportAbility();
         break;
       case SecondarySkill.GRENADE:
-        this.player.granade(0, 0);
+        const closest = this.scene.physics.closest(
+          this.player,
+          this.enemies.getChildren(),
+        ) as Enemy;
+
+        this.player.granade(closest.x, closest.y, this.player, this.enemies);
         break;
       default:
         break;

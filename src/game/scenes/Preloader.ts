@@ -33,7 +33,7 @@ export class Preloader extends Scene {
       '/assets/characters/orc/slashing.json',
     );
     this.load.atlas(
-      'exp',
+      SPRITES.EXPLOSION,
       '/assets/elements/skills/explosion.png',
       '/assets/elements/skills/explosion.json',
     );

@@ -3,6 +3,8 @@ import PhaserNavMeshPlugin, { PhaserNavMesh } from 'phaser-navmesh/dist/phaser-n
 import levelJSON from '../../../public/assets/leve1-horizontal.json';
 import { Bullet } from '../entities/bullet/bullet.ts';
 import { Enemy } from '../entities/enemy.ts';
+import { EnemyEntity } from '../entities/enemyEntity.ts';
+import { Entity } from '../entities/entity.ts';
 import { Player } from '../entities/player.ts';
 import { EventBus } from '../EventBus.ts';
 import { LAYERS, SCENES, SIZES, SPRITES } from '../utils/constats.ts';
@@ -169,16 +171,6 @@ export class Level extends Phaser.Scene {
       }),
       repeat: -1,
       frameRate: 15,
-    });
-
-    this.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('exp', {
-        prefix: 'Explosion_',
-        start: 24,
-        end: 26,
-      }),
-      frameRate: 9,
     });
   }
 }

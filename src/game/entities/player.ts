@@ -3,6 +3,8 @@ import { PrimarySkill, SecondarySkill, SkillsSet } from '../models/player.model.
 import { Level } from '../scenes/level.ts';
 import { Skill } from '../skills/Skill.ts';
 import { Teleport } from '../skills/Teleport.ts';
+import { Enemy } from './enemy.ts';
+import { EnemyEntity } from './enemyEntity.ts';
 import { Entity } from './entity.ts';
 import { Granade } from '../skills/Granade.ts';
 
@@ -156,10 +158,11 @@ export class Player extends Entity {
     }
   }
 
-  public granade(x: number, y: number) {
+  public granade(x: number, y: number, player: Player, enemy: EnemyEntity) {
     const granade = this.skills.find((s) => s instanceof Granade) as Granade;
+
     if (granade) {
-      granade.activate();
+      granade.activate(x, y, player, enemy);
     }
   }
 

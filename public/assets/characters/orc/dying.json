@@ -1,1 +1,330 @@
-{"textures":[{"image":"texture","format":"RGBA8888","size":{"w":0,"h":0},"scale":1,"frames":[{"filename":"0_Orc_Dying_000","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":0,"y":0,"w":128,"h":128}},{"filename":"0_Orc_Dying_001","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":128,"y":0,"w":128,"h":128}},{"filename":"0_Orc_Dying_002","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":256,"y":0,"w":128,"h":128}},{"filename":"0_Orc_Dying_003","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":384,"y":0,"w":128,"h":128}},{"filename":"0_Orc_Dying_004","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":0,"y":128,"w":128,"h":128}},{"filename":"0_Orc_Dying_005","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":128,"y":128,"w":128,"h":128}},{"filename":"0_Orc_Dying_006","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":256,"y":128,"w":128,"h":128}},{"filename":"0_Orc_Dying_007","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":384,"y":128,"w":128,"h":128}},{"filename":"0_Orc_Dying_008","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":0,"y":256,"w":128,"h":128}},{"filename":"0_Orc_Dying_009","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":128,"y":256,"w":128,"h":128}},{"filename":"0_Orc_Dying_010","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":256,"y":256,"w":128,"h":128}},{"filename":"0_Orc_Dying_011","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":384,"y":256,"w":128,"h":128}},{"filename":"0_Orc_Dying_012","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":0,"y":384,"w":128,"h":128}},{"filename":"0_Orc_Dying_013","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":128,"y":384,"w":128,"h":128}},{"filename":"0_Orc_Dying_014","rotated":false,"trimmed":false,"sourceSize":{"w":128,"h":128},"spriteSourceSize":{"x":0,"y":0,"w":128,"h":128},"frame":{"x":256,"y":384,"w":128,"h":128}}]}]}
+{
+  "textures": [
+    {
+      "image": "texture",
+      "format": "RGBA8888",
+      "size": {
+        "w": 0,
+        "h": 0
+      },
+      "scale": 1,
+      "frames": [
+        {
+          "filename": "0_Orc_Dying_000",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_001",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 128,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_002",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 256,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_003",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 384,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_004",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 0,
+            "y": 128,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_005",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 128,
+            "y": 128,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_006",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 256,
+            "y": 128,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_007",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 384,
+            "y": 128,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_008",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 0,
+            "y": 256,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_009",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 128,
+            "y": 256,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_010",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 256,
+            "y": 256,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_011",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 384,
+            "y": 256,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_012",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 0,
+            "y": 384,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_013",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 128,
+            "y": 384,
+            "w": 128,
+            "h": 128
+          }
+        },
+        {
+          "filename": "0_Orc_Dying_014",
+          "rotated": false,
+          "trimmed": false,
+          "sourceSize": {
+            "w": 128,
+            "h": 128
+          },
+          "spriteSourceSize": {
+            "x": 0,
+            "y": 0,
+            "w": 128,
+            "h": 128
+          },
+          "frame": {
+            "x": 256,
+            "y": 384,
+            "w": 128,
+            "h": 128
+          }
+        }
+      ]
+    }
+  ]
+}
