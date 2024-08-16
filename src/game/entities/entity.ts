@@ -37,9 +37,14 @@ export abstract class Entity extends Phaser.Physics.Arcade.Sprite {
   public health!: number;
 
   public power!: number;
+
   public alive = true;
+
   public attackSpeed!: number;
+
   public speed!: number;
+
+  public busy = false;
 
   public takeDamage(amount: number) {
     this.health -= amount;

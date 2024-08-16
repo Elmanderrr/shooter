@@ -4,7 +4,7 @@ import { Skill } from './Skill.ts';
 export class Teleport extends Skill {
   name = SecondarySkill.TELEPORT;
 
-  hotKey = '4';
+  hotKey = '1';
 
   iconPath = './assets/elements/skills/teleport.png';
 
@@ -16,8 +16,10 @@ export class Teleport extends Skill {
   }
 
   private blink(x: number, y: number): void {
+    this.hostEntity.busy = true;
+
     this.scene.tweens.chain({
-      targets: this.entity,
+      targets: this.hostEntity,
       tweens: [
         {
           alpha: 0,
@@ -31,6 +33,9 @@ export class Teleport extends Skill {
         {
           alpha: 1,
           duration: 200,
+          callback: () => {
+            this.hostEntity.busy = false;
+          },
         },
       ],
     });

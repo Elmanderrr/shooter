@@ -1,11 +1,9 @@
-import { Skill } from '../skills/Skill.ts';
-
 export enum PrimarySkill {
   AUTO_GUN = 'AUTO_GUN',
   LASER = 'LASER',
 }
 export enum SecondarySkill {
-  GRENADE = 'GRENADE',
+  MISSILE = 'MISSILE',
   TELEPORT = 'TELEPORT',
 }
 

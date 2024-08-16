@@ -1,7 +1,6 @@
 import PhaserNavMeshPlugin from 'phaser-navmesh';
 import { Level } from './scenes/level.ts';
 import { Game } from 'phaser';
-import { MainMenu } from './scenes/MainMenu.ts';
 import { Preloader } from './scenes/Preloader.ts';
 import { Start } from './scenes/Start.ts';
 import { SIZES } from './utils/constats.ts';
@@ -26,12 +25,12 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      // debug: true,
     },
   },
   scale: {
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-    mode: Phaser.Scale.FIT,
+    // autoCenter: Phaser.Scale.CENTER_BOTH,
+    // mode: Phaser.Scale.FIT,
   },
 };
 

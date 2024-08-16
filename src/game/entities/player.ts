@@ -3,39 +3,45 @@ import { PrimarySkill, SecondarySkill, SkillsSet } from '../models/player.model.
 import { Level } from '../scenes/level.ts';
 import { Skill } from '../skills/Skill.ts';
 import { Teleport } from '../skills/Teleport.ts';
-import { Enemy } from './enemy.ts';
-import { EnemyEntity } from './enemyEntity.ts';
+import { PlayerState, StateManager } from '../utils/StateManager.ts';
+import { Orc } from './orc.ts';
 import { Entity } from './entity.ts';
-import { Granade } from '../skills/Granade.ts';
+import { Missile } from '../skills/Missile.ts';
 
 export class Player extends Entity {
-  constructor(scene: Level, x: number, y: number, texture?: string) {
+  constructor(scene: Level, x: number, y: number, texture: string, playerState: PlayerState) {
     super(scene, x, y, texture, {
       power: 60,
       attackSpeed: 1000,
       health: 100,
-      speed: undefined,
+      speed: 100,
     });
+    Object.assign(this, playerState);
     this.setSize(28, 32);
     this.setOffset(10, 16);
     this.setScale(0.8);
     this.setDepth(2);
-    this.definedAnimations();
 
     this.drawHealthBar();
 
-    this.scene.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      if (this.alive && this.isWalkable(pointer)) {
-        this.setY(pointer.y);
-      }
-    });
+    this.skills = [
+      new Teleport(this.scene, this, 5000),
+      new Missile(this.scene, this, { cooldown: 3000, splashDistance: 50, power: 50 }),
+    ];
 
-    this.skills = [new Teleport(this.scene, this, 5000), new Granade(this.scene, this, 1000)];
-    this.scene.state.setPlayerState({
-      xp: this.experience,
+    StateManager.setPlayerState({
+      experience: this.experience,
       xpToLvlUp: this.experienceToNextLevel[this.level + 1],
-      lvl: this.level,
+      level: this.level,
     });
+  }
+
+  public get teleportSkill(): Teleport {
+    return this.skills.find((s) => s instanceof Teleport) as Teleport;
+  }
+
+  public get missileSkill(): Missile {
+    return this.skills.find((s) => s instanceof Missile) as Missile;
   }
 
   public skillsSet: SkillsSet = {
@@ -67,10 +73,15 @@ export class Player extends Entity {
 
   public credits: number = 0;
 
-  public update() {
+  public update(delta: number, enemies: Phaser.GameObjects.Group) {
     if (!this.alive) {
       return;
     }
+    const closest = this.scene.physics.closest(this, enemies?.getChildren()) as Orc;
+
+    this.setFlipX(closest?.x < this.x);
+
+    this.movementsController(delta);
 
     if (this.healthBar) {
       this.healthBar!.x = this.x;
@@ -78,44 +89,25 @@ export class Player extends Entity {
     }
   }
 
-  private definedAnimations() {
-    this.scene.anims.create({
-      key: 'down',
-      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
-        start: 0,
-        end: 2,
-      }),
-      frameRate: 9,
-    });
-
-    this.scene.anims.create({
-      key: 'left',
-      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
-        start: 12,
-        end: 14,
-      }),
-      frameRate: 9,
-    });
-    this.scene.anims.create({
-      key: 'right',
-      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
-        start: 24,
-        end: 26,
-      }),
-      frameRate: 9,
-    });
-    this.scene.anims.create({
-      key: 'up',
-      frames: this.scene.anims.generateFrameNumbers(this.texture.key, {
-        start: 36,
-        end: 38,
-      }),
-      frameRate: 9,
-    });
-  }
-
   private drawHealthBar() {
     this.healthBar = this.scene.add.rectangle(0, 0, this.width, 5, 0x4287f5);
+  }
+
+  private movementsController(delta: number) {
+    const keyW = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    const keyS = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    const velocity = (delta / 1000) * this.speed;
+
+    if (keyW.isDown) {
+      this.play('down', true);
+      this.setVelocity(0, -velocity * this.speed);
+    } else if (keyS.isDown) {
+      this.play('down', true);
+      this.setVelocity(0, velocity * this.speed);
+    } else {
+      this.setVelocity(0, 0);
+      this.stop();
+    }
   }
 
   public takeDamage(amount: number) {
@@ -129,41 +121,8 @@ export class Player extends Entity {
 
   public die() {
     super.die();
+    this.scene.gameOver();
     this.destroy();
-  }
-
-  private isWalkable(pointer: Phaser.Input.Pointer): boolean {
-    return (
-      !!this.scene.map.getTileAtWorldXY(
-        pointer.x,
-        pointer.y - this.displayHeight / 2,
-        undefined,
-        undefined,
-        this.scene.walkableLayer,
-      ) &&
-      !!this.scene.map.getTileAtWorldXY(
-        pointer.x,
-        pointer.y + this.displayHeight / 2,
-        undefined,
-        undefined,
-        this.scene.walkableLayer,
-      )
-    );
-  }
-
-  public teleport(x: number, y: number) {
-    const tp = this.skills.find((s) => s instanceof Teleport) as Teleport;
-    if (tp) {
-      tp.activate(x, y);
-    }
-  }
-
-  public granade(x: number, y: number, player: Player, enemy: EnemyEntity) {
-    const granade = this.skills.find((s) => s instanceof Granade) as Granade;
-
-    if (granade) {
-      granade.activate(x, y, player, enemy);
-    }
   }
 
   public earnExperience(amount: number) {
@@ -171,25 +130,30 @@ export class Player extends Entity {
     if (this.experience >= this.experienceToNextLevel[this.level + 1]) {
       this.lvlUp();
     }
-    this.scene.state.setPlayerState({
-      xp: this.experience,
+    StateManager.setPlayerState({
+      experience: this.experience,
     });
   }
 
   public earnCredits(amount: number) {
     this.credits += amount;
-    // console.log('credits', this.credits);
+    StateManager.setPlayerState({
+      credits: this.credits,
+    });
   }
 
   public spendCredits(amount: number) {
     this.credits -= amount;
+    StateManager.setPlayerState({
+      credits: this.credits,
+    });
   }
 
   public lvlUp() {
     this.level += 1;
     this.experience = 0;
-    this.scene.state.setPlayerState({
-      lvl: this.level,
+    StateManager.setPlayerState({
+      level: this.level,
       xpToLvlUp: this.experienceToNextLevel[this.level + 1],
     });
   }

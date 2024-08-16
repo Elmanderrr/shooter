@@ -4,7 +4,7 @@ import { Level } from '../scenes/level.ts';
 export abstract class Skill {
   constructor(
     protected scene: Level,
-    protected entity: Entity,
+    protected hostEntity: Entity,
     cooldown: number,
   ) {
     this.cooldown = cooldown;
@@ -20,6 +20,12 @@ export abstract class Skill {
 
   public lastUsedTime: number = -Infinity;
 
+  public skillSubscribers: any[] = [];
+
+  public onActivated(cb: (any) => void) {
+    this.skillSubscribers.push(cb);
+  }
+
   /**
    * Method to check if the skill is ready to be used
    * @returns boolean - true if the skill can be used, otherwise false
@@ -32,6 +38,7 @@ export abstract class Skill {
   protected use() {
     if (this.ready) {
       this.lastUsedTime = Date.now();
+      this.skillSubscribers.forEach((sub) => sub());
     } else {
       console.log(`teleport is on cooldown. ${this.cooldownLeft()} s left`);
     }

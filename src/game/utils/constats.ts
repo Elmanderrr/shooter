@@ -35,4 +35,13 @@ export const SPRITES = {
 
 export const IMAGES = {
   LASER: 'Laser',
+  MISSILE: 'Rocket',
+};
+
+export const AUDIO = {
+  LASER: 'LASER',
+  WASTED: 'WASTED',
+  PUNCH: 'PUNCH',
+  EXPLOSION: 'EXPLOSION',
+  MISSILE_FLIGHT: 'MISSILE_FLIGHT',
 };

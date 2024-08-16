@@ -9,10 +9,16 @@ export function Ability(props: { skill: Skill; onClick: (skill: Skill) => void }
 
   useEffect(() => {
     document.addEventListener('keyup', handleKeyUp);
+    props.skill.onActivated(onActivated);
+
     return () => {
       document.removeEventListener('keyup', handleKeyUp);
     };
-  });
+  }, []);
+
+  const onActivated = () => {
+    timer.current = setInterval(intervalHandler, 100);
+  };
 
   const handleKeyUp = (e: KeyboardEvent) => {
     if (props.skill.hotKey === e.key) {
@@ -24,7 +30,7 @@ export function Ability(props: { skill: Skill; onClick: (skill: Skill) => void }
     if (!ready) {
       return (
         <div>
-          <div className={'bg-black bg-opacity-50 absolute left-0 top-0 w-full h-full'}></div>
+          <div className={'bg-black bg-opacity-50 absolute left-0 top-0 w-full h-full '}></div>
           <div className={'text-white z-10 flex items-center justify-center relative'}>
             {cdValue}
           </div>
@@ -44,14 +50,13 @@ export function Ability(props: { skill: Skill; onClick: (skill: Skill) => void }
     }
   };
   const handleClick = () => {
-    timer.current = setInterval(intervalHandler, 100);
     props.onClick(props.skill);
   };
 
   return (
     <div
       className={
-        'rounded relative cursor-pointer flex flex-col justify-center bg-contain bg-white w-10 h-10 skill hover:shadow-black hover:shadow-md transition-shadow duration-150'
+        'rounded relative cursor-pointer flex flex-col justify-center bg-contain bg-no-repeat bg-center bg-white w-10 h-10 skill hover:shadow-black hover:shadow-md transition-shadow duration-150'
       }
       onClick={handleClick}
       style={{
@@ -59,6 +64,7 @@ export function Ability(props: { skill: Skill; onClick: (skill: Skill) => void }
       }}
     >
       {renderCooldownOverlay()}
+      <span className={'hotkey absolute left-[2px] top-0 font-mono'}>{props.skill.hotKey}</span>
     </div>
   );
 }

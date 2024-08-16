@@ -1,5 +1,9 @@
 import { Events } from 'phaser';
 
-// Used to emit events between React components and Phaser scenes
-// https://newdocs.phaser.io/docs/3.70.0/Phaser.Events.EventEmitter
-export const EventBus = new Events.EventEmitter();
+export class MyEventBus extends Events.EventEmitter {
+  removeListenerByKeys(names: string[], context: unknown) {
+    names.forEach((name) => this.removeListener(name, undefined, context));
+  }
+}
+
+export const EventBus = new MyEventBus();
